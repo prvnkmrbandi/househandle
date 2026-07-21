@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react';
 const BookingContext = createContext(null);
 
 // Placeholder — replace once real login exists (see backend INTEGRATION-GUIDE.md)
-const DEMO_CUSTOMER_ID = 'demo-customer-id';
+const DEMO_CUSTOMER_ID = 'e878112e-098c-4483-aa22-381fa5c2db3f';
 
 export function BookingProvider({ children }) {
   const [currentService, setCurrentService] = useState(null); // {id, name, category, price}
