@@ -28,6 +28,23 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const PLATFORM_COMMISSION_RATE = 0.20; // 20% — matches the number used throughout planning
 
 // ---------------------------------------------------------------
+// WAITLIST — public website sign-up form (househandle.co.uk)
+// ---------------------------------------------------------------
+app.post('/waitlist', async (req, res) => {
+  const { email, role, postcode } = req.body;
+  if (!email) return res.status(400).json({ error: 'email is required' });
+
+  const { data, error } = await supabase
+    .from('waitlist')
+    .upsert({ email, role: role || 'customer', postcode }, { onConflict: 'email' })
+    .select()
+    .single();
+
+  if (error) return res.status(500).json({ error: error.message });
+  res.json({ joined: true, email: data.email });
+});
+
+// ---------------------------------------------------------------
 // CUSTOMERS — create/update a profile right after sign-up, and fetch
 // it on login. The `id` here is always the real Supabase Auth user ID,
 // so every customer sees only their own data.
