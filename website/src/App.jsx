@@ -16,6 +16,7 @@ export default function App() {
 }
 
 function Nav() {
+  const appUrl = import.meta.env.VITE_APP_URL || '#';
   return (
     <nav>
       <div className="wrap">
@@ -24,25 +25,29 @@ function Nav() {
           <a href="#services">Services</a>
           <a href="#how">How it works</a>
         </div>
-        <a href="#join" className="btn">Join the waitlist</a>
+        <div style={{display:'flex', gap:10}}>
+          <a href="#join" className="btn">Join the waitlist</a>
+          <a href={appUrl} className="btn btn-solid">Book now</a>
+        </div>
       </div>
     </nav>
   );
 }
 
 function Hero() {
+  const appUrl = import.meta.env.VITE_APP_URL || '#';
   return (
     <header className="hero">
       <div className="wrap hero-grid">
         <div>
-          <span className="eyebrow">Coalville — opening soon</span>
+          <span className="eyebrow">Coalville — now booking</span>
           <h1>Home jobs, <em>fixed price</em>,<br />booked in minutes.</h1>
           <p className="lede">
             Plumbing, gardening, cleaning and repairs from vetted local pros.
             See the price before you book. No call-around, no surprise invoice.
           </p>
           <div className="hero-ctas">
-            <a href="#join" className="btn btn-solid">Get early access</a>
+            <a href={appUrl} className="btn btn-solid">Book a job now</a>
             <a href="#how" className="btn">See how it works</a>
           </div>
           <div className="hero-note">NO QUOTE HAGGLING &nbsp;·&nbsp; DBS-CHECKED PROS &nbsp;·&nbsp; PAY IN-APP</div>
