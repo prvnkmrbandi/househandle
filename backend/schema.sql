@@ -98,15 +98,6 @@ create table reviews (
   created_at timestamptz default now()
 );
 
--- ========== WAITLIST (public website sign-ups) ==========
-create table waitlist (
-  id uuid primary key default uuid_generate_v4(),
-  email text unique not null,
-  role text not null default 'customer' check (role in ('customer','pro')),
-  postcode text,
-  created_at timestamptz default now()
-);
-
 -- ========== SEED DATA (Coalville launch services) ==========
 insert into services (name, category, fixed_price, description) values
   ('Leaking tap', 'plumbing', 45.00, 'Call-out, diagnosis and washer/part replacement'),
@@ -120,7 +111,6 @@ alter table pros enable row level security;
 alter table bookings enable row level security;
 alter table payments enable row level security;
 alter table reviews enable row level security;
-alter table waitlist enable row level security;
 
 -- Example policies (tighten before going live — these are starting points)
 create policy "Customers see only their own record"

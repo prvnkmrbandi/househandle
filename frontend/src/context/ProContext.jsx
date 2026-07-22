@@ -4,7 +4,7 @@ const ProContext = createContext(null);
 
 // Same temporary approach as DEMO_CUSTOMER_ID in BookingContext.jsx —
 // replace with a real value from your `pros` table, or with real login later.
-const DEMO_PRO_ID = 'd0b79e84-98a5-478b-a6f7-e419397a905e';
+const DEMO_PRO_ID = 'demo-pro-id';
 
 export function ProProvider({ children }) {
   const [available, setAvailable] = useState(true);
