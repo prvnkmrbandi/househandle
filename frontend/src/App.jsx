@@ -19,6 +19,7 @@ import ProDashboard from './pages/pro/ProDashboard.jsx';
 import ActiveJob from './pages/pro/ActiveJob.jsx';
 import ProEarnings from './pages/pro/ProEarnings.jsx';
 import ProProfile from './pages/pro/ProProfile.jsx';
+import AdminDashboard from './pages/admin/AdminDashboard.jsx';
 
 export default function App() {
   const location = useLocation();
@@ -65,6 +66,9 @@ export default function App() {
         <Route path="/pro/job/:id" element={<ActiveJob />} />
         <Route path="/pro/earnings" element={<ProEarnings />} />
         <Route path="/pro/profile" element={<ProProfile />} />
+
+        {/* Admin — deliberately not linked anywhere in the nav, see README */}
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </div>
   );

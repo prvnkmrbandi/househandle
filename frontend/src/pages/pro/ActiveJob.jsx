@@ -5,8 +5,9 @@ import { usePro } from '../../context/ProContext.jsx';
 
 export default function ActiveJob() {
   const { id } = useParams();
-  const { lastEarnings, setLastEarnings } = usePro();
+  const { proId, lastEarnings, setLastEarnings } = usePro();
   const [loading, setLoading] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -23,6 +24,18 @@ export default function ActiveJob() {
       setError(err.message);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function cancelJob() {
+    setCancelling(true);
+    setError(null);
+    try {
+      await api.proCancelBooking(id, proId);
+      navigate('/pro');
+    } catch (err) {
+      setError(err.message);
+      setCancelling(false);
     }
   }
 
@@ -49,9 +62,16 @@ export default function ActiveJob() {
 
       {error && <div className="error-banner">{error}</div>}
 
-      <button className="btn-app" disabled={loading} onClick={complete}>
+      <button className="btn-app" disabled={loading || cancelling} onClick={complete}>
         {loading ? 'Processing…' : 'Mark job complete'}
       </button>
+
+      <button className="btn-app danger" disabled={loading || cancelling} onClick={cancelJob}>
+        {cancelling ? 'Cancelling…' : "Can't do this job"}
+      </button>
+      <div className="s-sub" style={{marginTop:4}}>
+        This immediately looks for another available pro for the customer.
+      </div>
     </div>
   );
 }

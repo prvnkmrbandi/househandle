@@ -20,10 +20,10 @@ export default function Confirmed() {
         <div className="pro-avatar"></div>
         <div>
           <div style={{fontSize:14, fontWeight:600}}>
-            {booking.pro_id ? 'Pro assigned' : 'Matching a pro…'}
+            {booking.pro_id ? 'Pro matched — awaiting acceptance' : 'Matching a pro…'}
           </div>
           <div className="s-sub" style={{margin:0}}>
-            {booking.pro_id ? 'Confirmed' : 'We\'ll notify you once matched'}
+            {booking.pro_id ? "We'll notify you once they accept" : "We'll notify you once matched"}
           </div>
         </div>
       </div>

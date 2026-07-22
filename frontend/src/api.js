@@ -6,8 +6,8 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 async function request(path, options = {}) {
   const res = await fetch(`${API_URL}${path}`, {
-    headers: { 'Content-Type': 'application/json' },
-    ...options
+    ...options,
+    headers: { 'Content-Type': 'application/json', ...(options.headers || {}) }
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
@@ -25,11 +25,32 @@ export const api = {
 
   getProBookings: (proId) => request(`/pros/${proId}/bookings`),
 
+  getAllPros: (token) =>
+    request('/pros', { headers: { Authorization: `Bearer ${token}` } }),
+  updatePro: (proId, updates, token) =>
+    request(`/pros/${proId}`, {
+      method: 'PATCH',
+      body: JSON.stringify(updates),
+      headers: { Authorization: `Bearer ${token}` }
+    }),
+
   createBooking: (booking) =>
     request('/bookings', { method: 'POST', body: JSON.stringify(booking) }),
 
   acceptBooking: (bookingId, proId) =>
     request(`/bookings/${bookingId}/accept`, {
+      method: 'POST',
+      body: JSON.stringify({ pro_id: proId })
+    }),
+
+  declineBooking: (bookingId, proId) =>
+    request(`/bookings/${bookingId}/decline`, {
+      method: 'POST',
+      body: JSON.stringify({ pro_id: proId })
+    }),
+
+  proCancelBooking: (bookingId, proId) =>
+    request(`/bookings/${bookingId}/pro-cancel`, {
       method: 'POST',
       body: JSON.stringify({ pro_id: proId })
     }),

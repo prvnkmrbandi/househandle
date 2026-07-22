@@ -53,6 +53,20 @@ must be set — get these from Supabase → Settings → API Keys. Use the
 5. Deploy. Vercel gives you a URL immediately; connect your real domain
    (househandle.co.uk) afterwards in Vercel's project settings.
 
+## The admin page — how access actually works now
+`/admin` uses a **real, server-verified login** — not a password hidden
+in the browser. It works like this:
+1. You log in with a real email/password (a genuine Supabase Auth account)
+2. The frontend sends that login's access token to the backend with every
+   admin request
+3. The backend checks the token is valid *and* that the account is
+   listed in the `admins` table — only then does it allow the request
+
+**To create your first admin account**, see the setup steps in
+`backend/MIGRATION-excluded-pro-ids.md`. In short: sign up for an account
+(same as a customer would), then manually add a row to the `admins`
+table in Supabase with that account's user ID.
+
 ## What's deliberately left out (a developer will need to add)
 - The **pro app doesn't have login yet** — it still uses a placeholder ID
   in `ProContext.jsx`. The same pattern used for customers (AuthContext +
